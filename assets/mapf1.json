@@ -40,11 +40,11 @@
         {
          "columns":25,
          "firstgid":1,
-         "image":"fundof1.png",
+         "image":"mapf1.png",
          "imageheight":450,
          "imagewidth":800,
          "margin":0,
-         "name":"fundof1",
+         "name":"mapf1",
          "spacing":0,
          "tilecount":350,
          "tileheight":32,
