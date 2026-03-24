@@ -23,43 +23,26 @@ class scene0 extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 225, "mapf1");
+    //this.add.image(400, 225, "mapf1");
     
-    this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
-      x: 100,
-      y: 350,
-      radius: 50,
-      base: this.add.circle(0, 0, 50, 0x888888),
-      thumb: this.add.circle(0, 0, 25, 0xcccccc),
-    });
-
-  //this.player = this.physics.add.image(400, 225, "asteroideum", 0);
-
     this.player = this.asteroideum = this.physics.add.image(800, 450, "asteroideum", 0); //SURGE NO MEIO DO MAPA   
-
-   //this.asteroideum = this.physics.add.image(400, 225, "asteroideum", 0);
-
-   //this.cameras.main.setBounds(0, 0, 400, 225);
+    this.player.setCollideWorldBounds(true);
+  
+    //this.player = this.physics.add.image(400, 225, "asteroideum", 0);
+    //this.asteroideum = this.physics.add.image(400, 225, "asteroideum", 0);
+    //this.cameras.main.setBounds(0, 0, 400, 225);
     
   this.cameras.main.startFollow(this.player);
 
-  this.cameras.main.setBounds(0, 0, 800 * 2, 450 * 2);
-  this.physics.world.setBounds(0, 0, 800 * 2, 450 * 2);
+  this.cameras.main.setBounds(0, 0, 800 * 2, 450 * 2); 
+  this.physics.world.setBounds(400, 225, 800, 450);
 
     this.add.image(0, 0, "mapf1").setOrigin(0);
     this.add.image(800, 0, "mapf1").setOrigin(0).setFlipX(true);
     this.add.image(0, 450, "mapf1").setOrigin(0).setFlipY(true);
     this.add.image(800, 450, "mapf1").setOrigin(0).setFlipX(true).setFlipY(true);
 
-    this.player.setCollideWorldBounds(true);
 
-    this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
-      x: 100,
-      y: 350,
-      radius: 50,
-      base: this.add.circle(0, 0, 50, 0x888888),
-      thumb: this.add.circle(0, 0, 25, 0xcccccc),
-    });
       
     this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
       x: 100,
@@ -92,9 +75,6 @@ class scene0 extends Phaser.Scene {
         
       }
     });
-      
-
-      
   
 
     
