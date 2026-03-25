@@ -6,7 +6,7 @@ class scene0 extends Phaser.Scene {
     this.speed = 100;
     this.direction = undefined;
   }
-  
+
   preload() {
     this.load.plugin(
       "rexvirtualjoystickplugin",
@@ -23,6 +23,11 @@ class scene0 extends Phaser.Scene {
     this.load.image("asteroideum", "asteroideum.png");
 
     this.load.audio("menusong", "menusong.mp3");
+
+    this.load.spritesheet("combustivel", "combustive.png", {
+      frameWidth: 128,
+      frameHeight: 128,
+    });
 
     this.load.spritesheet("uispritesheet", "uispritesheet.png", {
       frameWidth: 800,
@@ -52,7 +57,11 @@ class scene0 extends Phaser.Scene {
     this.add.image(0, 0, "mapf1").setOrigin(0);
     this.add.image(800, 0, "mapf1").setOrigin(0).setFlipX(true);
     this.add.image(0, 450, "mapf1").setOrigin(0).setFlipY(true);
-    this.add.image(800, 450, "mapf1").setOrigin(0).setFlipX(true).setFlipY(true);
+    this.add
+      .image(800, 450, "mapf1")
+      .setOrigin(0)
+      .setFlipX(true)
+      .setFlipY(true);
 
     this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
       x: 100,
@@ -113,24 +122,49 @@ class scene0 extends Phaser.Scene {
       null,
       this,
     );
-  }
-  
+
+    
+    this.combustivel = this.physics.add.group();
+    const comPos = [
+      { x: 500, y: 600 },
+      { x: 1100, y: 600 },
+      { x: 800, y: 200 },
+    ];
+
+    this.anims.create({
+      key: "combustivel_anim",
+      frames: this.anims.generateFrameNumbers("combustivel", { start: 0, end: 3 }),
+      frameRate: 5,
+      repeat: -1,
+    });
+    
+    comPos.forEach((pos) => {
+      const c = this.combustivel.create(pos.x, pos.y, "combustivel");
+      c.setScale(1.5);
+      c.setCollideWorldBounds(true);
+      
+    });
+    
+
+     // Colisão
+     this.physics.add.collider(
+       this.player,
+       this.combustivel,
+       this.hitCombustivel,
+       null,
+       this,
+     );
+    
+    
+  } //chave do create
+
   hitAsteroid(player, asteroid) {
-    player.disableBody(true, true);
-    //player.setTint(0xff0000); NÃO PRECISA JÁ QUE O PLAYER É INVISÍVEL
-    
-    
-  };
+    player.disableBody(true, true);}
 
-    
-  
+  hitCombustivel(player, combustivel) {
+    combustivel.disableBody(true, true); }
 
-
- 
-
-
-  update() { }
-
+  update() {}
 }
 export default scene0;
 
