@@ -10,27 +10,26 @@ export default class SceneMenu extends Phaser.Scene {
       true,
     );
     this.load.setPath("assets/");
-//Menu  
+    //Menu
     this.load.image("atirador", "botao_atirador.png");
     this.load.image("piloto", "botao_piloto.png");
     this.load.image("borda", "borda_menu.png");
-    this.load.image("fundo", "fundo.png");
-    this.load.audio("som", "lazer.mp3");
+    this.load.image("home", "home.png");
 
+    this.load.image("fundo", "fundo.png");
 
     //scene0
     this.load.image("mapf1", "mapf1.png");
     this.load.image("star", "star.png");
     this.load.image("asteroideum", "asteroideum.png");
     this.load.image("startf1", "startf1.png");
-    
     this.load.image("et1", "enemigo1.png");
 
     this.load.spritesheet("estrelas", "estrelas_sprite_shit.png", {
       frameWidth: 800,
       frameHeight: 450,
     });
-    
+
     this.load.spritesheet("combustivel", "combustivel.png", {
       frameWidth: 64,
       frameHeight: 64,
@@ -46,27 +45,36 @@ export default class SceneMenu extends Phaser.Scene {
       frameHeight: 32,
     });
   }
-   
 
-    // //Ende Game
-    // this.load.image("botao_Voltar", "assets/voltar.png");
+  // //Ende Game
+  // this.load.image("botao_Voltar", "assets/voltar.png");
 
   create() {
-  this.music = this.sound.add("musica", { loop: true });
+    this.add.image(0, 0, "fundo").setOrigin(0, 0);
 
-  // Espera o primeiro clique/toque para iniciar a música
-  this.input.once("pointerdown", () => {
-    this.music.play();
-  });
+    // this.estrelas = this.physics.add.sprite(400,225,'estrelas',4);
 
-    this.anims.create({
-      frames: this.anims.generateFrameNumbers("estrelas", { start: 0, end: 14 }),
-      frameRate: 24,
-      repeat: -1
+    //Animações
+    // this.anims.create({
+    //     key: "rotate-estrelas",
+    //     frames: this.anims.generateFrameNumbers("estrelas", {start:0,end:14}),
+    //     frameRate: 10,
+    //     repeat: -1
+    // });
+
+    // this.estrelas.play("rotate-estrelas");
+
+    this.add.image(0, 0, "borda").setOrigin(0, 0);
+
+    this.textTitulo = this.add.text(100, 50, `Astronautica: Beta`, {
+      fontSize: "32px",
+      fill: "#ffffff",
     });
 
-    this.add.image(0, 0, "fundo").setOrigin(0, 0);
-    let btnPlay = this.add.image(320, 230, "piloto").setOrigin(0, 0);
+    this.textTitulo.setScrollFactor(0);
+
+    let btnPlay = this.add.image(100, 280, "piloto").setOrigin(0, 0);
+    btnPlay.setScale(3); // diminui para 50% do tamanho original
     btnPlay.setInteractive();
 
     //Adicionar o clique do botao
