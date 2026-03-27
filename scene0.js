@@ -6,6 +6,7 @@ class scene0 extends Phaser.Scene {
     this.speed = 100;
     this.direction = undefined;
     this.fuel = 20;
+    this.life = 3;
   }
   //telanave, musica 2f, hitbox, som de coleta de combustivel, timer passar de fase, colisao asteroide, spawn de combsutivel
   preload() {
@@ -120,6 +121,7 @@ class scene0 extends Phaser.Scene {
       const c = this.combustivel.create(pos.x, pos.y, "combustivel");
       c.setScale(1);
       c.setCollideWorldBounds(true);
+      c.play( "combustivel_anim")
     });
 
     // Colisão
@@ -130,6 +132,13 @@ class scene0 extends Phaser.Scene {
       null,
       this,
     );
+
+    this.textLife = this.add
+      .text(600, 50, `Life: ${this.life}`, {
+        fontSize: "32px",
+        fill: "#ffffff",
+      })
+      .setScrollFactor(0);
 
     this.textFuel = this.add
       .text(16, 50, `Fuel: ${this.fuel}`, {
@@ -213,16 +222,44 @@ class scene0 extends Phaser.Scene {
       null,
       this,
     );
+
+    
+     /* this.addEvent({
+        delay: 10000,
+        callback: () => {
+          comPos.forEach((pos) => {
+            const c = this.combustivel.create(pos.x, pos.y, "combustivel");
+            c.setScale(1);
+            c.setCollideWorldBounds(true);
+            c.play("combustivel_anim");
+          });
+        },
+        loop: true,
+      });*/ //NAO ESTA FUNCIONANDO
+      
+    
   } //chave do create
 
   hitAsteroid(player, asteroidGroup) {
     //player.disableBody(true, true);
     //this.scene.start("game-over");
-    this.scene.pause();
+    this.life -= 1;
+    this.textLife.setText(`Life: ${this.life}`);
+    this.player.enableBody(false, false)
+    this.time.addEvent({
+      delay: 500,
+    })
+    this.player.enableBody(true, player.x, player.y, true, true)
+
+    
+    if (this.life <= 0) {
+      this.scene.stop();
+      this.scene.start("game-over");
+    }
   }
 
   hitCombustivel(player, combustivel) {
-    (combustivel.disableBody(true, true),
+    (combustivel.destroy(true, true),
       (this.fuel += 5),
       this.textFuel.setText(`Fuel: ${this.fuel}`));
   }
@@ -232,21 +269,24 @@ class scene0 extends Phaser.Scene {
   }
 
   spawnAsteroid() {
-    //if (this.asteroidGroup.getLength() < this.asteroidGroup.maxSize) {
-    // let enemy = this.inimigos.create(x, y, 'inimigo');
-    // }
-    const x = Phaser.Math.Between(0, this.game.config.width);
-    const y = Phaser.Math.Between(0, this.game.config.height);
+    const maxAsteroids = 2; // Limite de asteroides (maior quando for lancar o jogo)
 
-    const asteroid = this.asteroidGroup.create(x, y, "asteroideum");
-    //asteroid.setCollisionCategory(null);
-    asteroid.setBounce(1);
-    asteroid.setCollideWorldBounds(true);
-    asteroid.setVelocity(
-      Phaser.Math.Between(-200, 200),
-      Phaser.Math.Between(-200, 200),
-    );
+    if (this.asteroidGroup.getLength() < maxAsteroids) {
+      const x = Phaser.Math.Between(0, this.game.config.width);
+      const y = Phaser.Math.Between(0, this.game.config.height);
+
+      const asteroid = this.asteroidGroup.create(x, y, "asteroideum");
+      asteroid.setBounce(1);
+      asteroid.setCollideWorldBounds(true);
+      asteroid.setVelocity(
+        Phaser.Math.Between(-200, 200),
+        Phaser.Math.Between(-200, 200),
+      );
+    }
   }
-}
 
+
+
+
+}
 export default scene0;
