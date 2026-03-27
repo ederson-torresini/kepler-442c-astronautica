@@ -15,7 +15,7 @@ export default class SceneMenu extends Phaser.Scene {
     this.load.image("piloto", "botao_piloto.png");
     this.load.image("borda", "borda_menu.png");
     this.load.image("fundo", "fundo.png");
-    this.load.audio("musica", "menusong.mp3");
+   
     this.load.audio("som", "lazer.mp3");
 
 
@@ -24,7 +24,7 @@ export default class SceneMenu extends Phaser.Scene {
     this.load.image("star", "star.png");
     this.load.image("asteroideum", "asteroideum.png");
     this.load.image("startf1", "startf1.png");
-    this.load.audio("songf1", "songf1.mp3");
+    
     this.load.image("et1", "enemigo1.png");
 
     this.load.spritesheet("estrelas", "estrelas_sprite_shit.png", {
@@ -53,12 +53,11 @@ export default class SceneMenu extends Phaser.Scene {
     // this.load.image("botao_Voltar", "assets/voltar.png");
 
   create() {
-  this.music = this.sound.add("musica", { loop: true });
+ 
 
   // Espera o primeiro clique/toque para iniciar a música
-  this.input.once("pointerdown", () => {
-    this.music.play();
-  });
+  
+  
 
     this.anims.create({
       frames: this.anims.generateFrameNumbers("estrelas", { start: 0, end: 14 }),
