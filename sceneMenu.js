@@ -14,7 +14,6 @@ export default class SceneMenu extends Phaser.Scene {
     this.load.image("atirador", "botao_atirador.png");
     this.load.image("piloto", "botao_piloto.png");
     this.load.image("borda", "borda_menu.png");
-    this.load.image("home", "home.png");
 
     this.load.image("fundo", "fundo.png");
 
@@ -78,6 +77,6 @@ export default class SceneMenu extends Phaser.Scene {
     btnPlay.setInteractive();
 
     //Adicionar o clique do botao
-    btnPlay.on("pointerdown", () => this.scene.start("scene0"));
+    btnPlay.on("pointerdown", () => this.scene.start("scene1"));
   }
 }

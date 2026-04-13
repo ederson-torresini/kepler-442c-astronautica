@@ -1,6 +1,6 @@
-class scene0 extends Phaser.Scene {
+export default class scene1 extends Phaser.Scene {
   constructor() {
-    super("scene0");
+    super("scene1");
 
     this.threshold = 0.1;
     this.speed = 100;
@@ -22,7 +22,9 @@ class scene0 extends Phaser.Scene {
 
     this.load.image("mapf1", "mapf1.png");
 
-    this.load.image("nave", "ui.png");
+    this.load.image("mira", "mira.png");
+
+    this.load.image("telanave", "telanave.png");
 
     this.load.spritesheet("Alvo1", "perseguidor1.png", {
       frameWidth: 48,
@@ -31,10 +33,69 @@ class scene0 extends Phaser.Scene {
 
     this.load.spritesheet("arma", "torreta.png", {
       frameWidth: 428,
-      frameHeight: 200,  //grande para ver animação,
+      frameHeight: 200, //grande para ver animação,
     });
 
-    this.load.spritesheet("estrelas", "uispritesheet.png", {
+    this.load.spritesheet("estrelas", "estrelas_sprite_shit.png", {
       frameWidth: 800,
       frameHeight: 450,
     });
+  }
+  create() {
+    this.physics.pause(); // Pausa a física para congelar a cena
+
+    this.input.once("pointerdown", () => {
+      this.physics.resume();
+    });
+    this.add.image(0, 0, "mapf1").setOrigin(0);
+
+    this.anims.create({
+      key: "estrelas_anim",
+      frames: this.anims.generateFrameNumbers("estrelas", {
+        start: 0,
+        end: 14,
+      }),
+      frameRate: 40,
+      repeat: -1,
+    });
+
+    this.estrelas = this.add
+      .sprite(0, 0, "estrelas", 0)
+      .setOrigin(0)
+      .setAlpha(0.5);
+    this.estrelas.play("estrelas_anim");
+
+    this.player = this.mira = this.physics.add.image(400, 225, "mira", 0); //SURGE NO MEIO DO MAPA
+    this.mira.setScale(0.3);
+    this.player.setCollideWorldBounds(true);
+
+    this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
+      x: 100,
+      y: 350,
+      radius: 50,
+      base: this.add.circle(0, 0, 50, 0x888888),
+      thumb: this.add.circle(0, 0, 25, 0xcccccc),
+    });
+
+    this.joystick.on("update", () => {
+      const angle = Phaser.Math.DegToRad(this.joystick.angle);
+      const force = this.joystick.force;
+
+      if (force > this.threshold) {
+        this.direction = new Phaser.Math.Vector2(
+          Math.cos(angle),
+          Math.sin(angle),
+        ).normalize();
+      }
+
+      if (this.joystick.force > 0) {
+        this.mira.setVelocity(
+          this.direction.x * this.speed,
+          this.direction.y * this.speed,
+        );
+      } else {
+        this.mira.setVelocity(0, 0);
+      }
+    });
+  }
+}
