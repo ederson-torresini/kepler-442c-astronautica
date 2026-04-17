@@ -26,9 +26,14 @@ export default class scene1 extends Phaser.Scene {
 
     this.load.image("telanave", "telanave.png");
 
-    this.load.spritesheet("Alvo1", "perseguidor1.png", {
-      frameWidth: 48,
-      frameHeight: 48,
+    this.load.spritesheet("button", "button.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("Alvo1", "enemigo1.png", {
+      frameWidth: 64,
+      frameHeight: 64,
     });
 
     this.load.spritesheet("arma", "torreta.png", {
@@ -58,6 +63,62 @@ export default class scene1 extends Phaser.Scene {
       frameRate: 40,
       repeat: -1,
     });
+    
+    this.anims.create({
+      key: "alvo",
+      frames: this.anims.generateFrameNumbers("Alvo1", {
+        start: 0,
+        end: 14,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.player = this.mira = this.physics.add.image(400, 225, "mira", 0); //SURGE NO MEIO DO MAPA
+    this.mira.setScale(0.5);
+    this.player.setCollideWorldBounds(true);
+
+    this.time.addEvent({
+      delay: 500,
+      callback: this.spawnAlvo,
+      callbackScope: this,
+      loop: true,
+    });
+
+    this.alvoGroup = this.physics.add.group();
+    this.physics.add.collider(
+      this.player,
+      this.alvoGroup,
+      this.hitAlvo,
+      null,
+      this,
+    );
+
+    this.anims.create({
+      key: "arma_intro",
+      frames: [
+        { key: "arma", frame: 13 },
+        { key: "arma", frame: 0 },
+        { key: "arma", frame: 1 },
+        { key: "arma", frame: 2 },
+        { key: "arma", frame: 3 },
+        { key: "arma", frame: 4 },
+        { key: "arma", frame: 5 },
+        { key: "arma", frame: 6 },
+      ],
+      frameRate: 5,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "arma_loop",
+      frames: this.anims.generateFrameNumbers("arma", {
+        start: 6,
+        end: 9,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
 
     this.estrelas = this.add
       .sprite(0, 0, "estrelas", 0)
@@ -65,9 +126,14 @@ export default class scene1 extends Phaser.Scene {
       .setAlpha(0.5);
     this.estrelas.play("estrelas_anim");
 
-    this.player = this.mira = this.physics.add.image(400, 225, "mira", 0); //SURGE NO MEIO DO MAPA
-    this.mira.setScale(0.3);
-    this.player.setCollideWorldBounds(true);
+    this.arma = this.add
+      .sprite(400, 450, "arma", 13)
+      .setOrigin(0.5, 1)
+      .setScale(1);
+    this.arma.play("arma_intro");
+    this.arma.on("animationcomplete-arma_intro", () => {
+      this.arma.play("arma_loop");
+    });
 
     this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
       x: 100,
@@ -98,4 +164,22 @@ export default class scene1 extends Phaser.Scene {
       }
     });
   }
+  spawnAlvo(){
+    const maxAlvo = 10; // Limite de asteroides (maior quando for lancar o jogo)
+
+    if (this.alvoGroup.getLength() < maxAlvo) {
+      const x = Phaser.Math.Between(0, 800);
+      const y = Phaser.Math.Between(0, 450);
+
+      const alvo = this.alvoGroup.create(x, y, "Alvo1");
+      alvo.setBounce(1);
+      alvo.setSize(48, 48);
+      alvo.setCollideWorldBounds(true);
+      alvo.setVelocity(
+        Phaser.Math.Between(-200, 200),
+        Phaser.Math.Between(-200, 200),
+      );
+    }
+  }
+
 }
