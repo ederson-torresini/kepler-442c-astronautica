@@ -11,7 +11,7 @@ class scene0 extends Phaser.Scene {
     this.tempo = 60; //tempo para passar de fase
     // this.combcoll = 3 //quanto combustivel falta coletar para spawnar mais
   }
-  //frames fuellevel, musica 2f, camada texto, CAMADAS, spawn em cima do player, outof bounds 225 pixels
+  //frames fuellevel, musica 2f spawn em cima do player, outof bounds 225 pixels
   preload() {
     this.load.plugin(
       "rexvirtualjoystickplugin",
@@ -199,7 +199,7 @@ class scene0 extends Phaser.Scene {
       this.tempo -= 1;
       if (this.tempo <= 0) {
         this.scene.stop();
-        this.scene.start("scene1");
+        this.scene.start("scene2");
       }
     }, 1000);
 
