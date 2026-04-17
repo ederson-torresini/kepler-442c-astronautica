@@ -13,6 +13,7 @@ export default class SceneMenu extends Phaser.Scene {
     //Menu
     this.load.image("atirador", "botao_atirador.png");
     this.load.image("piloto", "botao_piloto.png");
+    this.load.image("cutscene", "botao_cutscene.png");
     this.load.image("borda", "borda_menu.png");
 
     this.load.image("fundo", "fundo.png");
@@ -85,5 +86,12 @@ export default class SceneMenu extends Phaser.Scene {
 
     //Adicionar o clique do botao
     btnAtirador.on("pointerdown", () => this.scene.start("scene1"));
+
+    let btnCutscene = this.add.image(570, 10, "cutscene").setOrigin(0, 0);
+    btnCutscene.setScale(3); 
+    btnCutscene.setInteractive();
+
+    //Adicionar o clique do botao
+    btnCutscene.on("pointerdown", () => this.scene.start("sceneCut"));
   }
 }

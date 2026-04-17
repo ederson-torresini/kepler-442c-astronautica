@@ -364,7 +364,7 @@ class scene0 extends Phaser.Scene {
   }
 
   spawnAsteroid() {
-    const maxAsteroids = 10; // Limite de asteroides (maior quando for lancar o jogo)
+    const maxAsteroids = 10; // Limite de asteroides (maior quando for lancar o jogo)? ou dez ja ta dificil?
 
     if (this.asteroidGroup.getLength() < maxAsteroids) {
       const x = Phaser.Math.Between(400, 1200);
@@ -378,6 +378,12 @@ class scene0 extends Phaser.Scene {
         Phaser.Math.Between(-200, 200),
         Phaser.Math.Between(-200, 200),
       );
+      this.tweens.add({
+        targets: asteroid,
+        scale: 1.7,
+        duration: 3000,
+        ease: 'Linear'
+      });
     }
   }
 
