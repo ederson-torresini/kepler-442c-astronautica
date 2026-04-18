@@ -134,7 +134,7 @@ class scene0 extends Phaser.Scene {
 
     this.anims.create({
       key: "asteroideumex_anim",
-      frames: this.anims.generateFrameNumbers("asteroideumex", {
+      frames: this.anims.generateFrameNumbers("asteroideumex", { //explosao do asteroideum
         start: 0,
         end: 6,
       }),
