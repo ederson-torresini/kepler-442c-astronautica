@@ -3,6 +3,7 @@ import sceneMenu from "./sceneMenu.js";
 import scene1 from "./scene1.js";
 import scene0 from "./scene0.js";
 import sceneCut from "./sceneCut.js";
+import gameover from "./gameover.js";
 
 class Game extends Phaser.Game {
   constructor() {
@@ -13,6 +14,7 @@ class Game extends Phaser.Game {
     this.scene.add("scene1", scene1);
     this.scene.start("sceneMenu");
     this.scene.add("sceneCut", sceneCut);
+    this.scene.add("game-over", gameover);
   }
 }
 

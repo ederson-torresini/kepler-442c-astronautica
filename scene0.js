@@ -11,7 +11,7 @@ class scene0 extends Phaser.Scene {
     this.tempo = 60; //tempo para passar de fase
     
   }
-  //frames fuellevel, musica 2f, spawn em cima do player, PARAR COM AS EXPLOSOES NO SEGUNDO 25
+  // ***arrumar problema de fim de scene0 fram source null,*** frames fuellevel, musica 2f, spawn em cima do player, PARAR COM AS EXPLOSOES NO SEGUNDO 25
   preload() {
     this.load.plugin(
       "rexvirtualjoystickplugin",
@@ -201,7 +201,7 @@ class scene0 extends Phaser.Scene {
       
       if (this.fuel <= 0) {
         this.scene.stop();
-        this.scene.start("game-over");
+        this.scene.start("gameover");
       }
     }, 1000);
 
@@ -212,7 +212,7 @@ class scene0 extends Phaser.Scene {
       this.textFuel.setText(`Fuel: ${this.fuel}`);
       if (this.fuel <= 0) {
         this.scene.stop();
-        this.scene.start("game-over");
+        this.scene.start("gameover");
       }
       
     }, 500); 
@@ -329,24 +329,24 @@ class scene0 extends Phaser.Scene {
     this.uiTopLayer.add(this.joystick.thumb);
     this.uiTopLayer.setDepth(2000);
     
+
     
-  
+
+    
+    
     
   } //CHAVE DO CREATE
-
+  
+  
   
 
   hitAsteroid(player, asteroidGroup) {
     this.life -= 1;
     this.textLife.setText(`Life: ${this.life}`);
 
-    //animação de explosão
-    this.exp = this.physics.add.sprite(
-      asteroidGroup.x,
-      asteroidGroup.y,
-      "asteroideumex",
-    );
+    
 
+    //animação de explosão
     this.sound.play("explosion");
     this.exp.play("asteroideumex_anim");
     asteroidGroup.destroy();
@@ -357,7 +357,7 @@ class scene0 extends Phaser.Scene {
 
     if (this.life === 0) {
       this.scene.stop();
-      this.scene.start("game-over");
+      this.scene.start("gameover");
     }
 
   }
