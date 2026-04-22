@@ -18,6 +18,8 @@ class sceneCut extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
+
+    this.load.font("news-gothic-bold", "news-gothic-bold.otf");
   }
 
   create() {
@@ -54,9 +56,10 @@ class sceneCut extends Phaser.Scene {
       "Numa galáxia não tão distante...",
     ];
 
-    this.text1 = this.add.text(180, 150, content, {
-      font: "20px Arial",
-      fill: "#ffffff",
+    this.text1 = this.add.text(160, 150, content, {
+      fontFamily: "news-gothic-bold",
+      fontSize: "20px",
+      fill: "#ffe81f",
     });
     
     this.time.delayedCall(3000, () => {
@@ -69,13 +72,14 @@ class sceneCut extends Phaser.Scene {
       const content = [
         "Em meio ao conflito entre a Via Láctea e a galáxia",
         "de Andrômeda, uma nave tripulada por apenas um",
-        "auxiliar de artilharia e um piloto é enviada numa missão de",
-        "reconhecimento.",
+        "auxiliar de artilharia e um piloto é enviada numa missão",
+        "de reconhecimento.",
       ];
 
-      this.text2 = this.add.text(180, 150, content, {
-        font: "20px Arial",
-        fill: "#ffffff",
+      this.text2 = this.add.text(160, 150, content, {
+        fontFamily: "news-gothic-bold",
+        fontSize: "20px",
+        fill: "#ffe81f",
       });
     });
 
@@ -92,9 +96,10 @@ class sceneCut extends Phaser.Scene {
         "emboscada.",
       ];
 
-      this.text3 = this.add.text(180, 150, content, {
-        font: "20px Arial",
-        fill: "#ffffff",
+      this.text3 = this.add.text(160, 150, content, {
+        fontFamily: "news-gothic-bold",
+        fontSize: "20px",
+        fill: "#ffe81f",
       });
     });
     
@@ -210,9 +215,10 @@ class sceneCut extends Phaser.Scene {
           "alcançar ajuda?",
         ];
 
-        this.text4 = this.add.text(180, 150, content, {
-          font: "20px Arial",
-          fill: "#ffffff",
+        this.text4 = this.add.text(160, 150, content, {
+          fontFamily: "news-gothic-bold",
+          fontSize: "20px",
+          fill: "#ffe81f",
         });
       });
 
